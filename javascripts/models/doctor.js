@@ -40,6 +40,6 @@ class Doctor {
     }
 
     renderDoctors(doc) {
-        return cat
+        return doc
     }
 }
