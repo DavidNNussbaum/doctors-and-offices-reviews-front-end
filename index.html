@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> Js + Rails as Api</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
 </head>
 <body>
-    
+    <h1>Welcome To The Doctors And Offices Review Site!</h1>
+    <div id="button-control">
+        <button id="button-show">Show Categories</button>
+        <button id="button-new">Show Form</button>
+    </div>
+    <div id="list">
+        <ul id="doctors-list"></ul>
+    </div>
+    <script src="javascripts/global.js"></script>
+    <script src="javascripts/models/user.js"></script>
+    <script src="javascripts/models/doctor.js"></script>
+    <script src="javascripts/models/review.js"></script>
+    <script src="javascripts/services/userApi.js"></script>
+    <script src="javascripts/services/doctorApi.js"></script>
+    <script src="javascripts/services/reviewApi.js"></script>
+    <script src="javascripts/index.js"></script>
 </body>
 </html>
