@@ -119,17 +119,17 @@ const handleUpdate = (e) => {
 }
 
 
-const replaceElement = (product, li) => {
+const replaceElement = (review, li) => {
     li.innerHTML = `
-        <strong class="comments-doctorRating">${comment.doctorRating}</strong>
-        <span class="comments-doctorComments">${comment.doctorComment}</span>
-        <span class="comments-doctorOfficeRating">${comment.doctorOfficeRating}</span>
-        <span class="comments-doctorOfficeComments">${comment.doctorOfficeComment}</span>
-        <button class="edit-comment" data-id="${comment.id}">Edit</button>
-        <button class="delete-comment" data-id="${comment.id}">Delete</button>
+        <strong class="reviews-doctorRating">${review.doctorRating}</strong>
+        <span class="reviews-doctorComments">${review.doctorComment}</span>
+        <span class="reviews-doctorOfficeRating">${review.doctorOfficeRating}</span>
+        <span class="reviews-doctorOfficeComments">${review.doctorOfficeComment}</span>
+        <button class="edit-review" data-id="${review.id}">Edit</button>
+        <button class="delete-review" data-id="${review.id}">Delete</button>
     `
-    document.querySelector(`button.delete-comment[data-id='${comment.id}']`).addEventListener("click", handleDelete)
-    document.querySelector(`button.edit-comment[data-id='${comment.id}']`).addEventListener("click", handleUpdate)
+    document.querySelector(`button.delete-review[data-id='${review.id}']`).addEventListener("click", handleDelete)
+    document.querySelector(`button.edit-review[data-id='${review.id}']`).addEventListener("click", handleUpdate)
 
 }
 
