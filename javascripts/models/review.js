@@ -16,7 +16,7 @@ class Review {
     }
 
     static findByName(doctorName) {
-       return this.all.find(function(doctor_id) { this.doctor_id.name === name})
+       return this.all.find(function(doctor_id) { this.doctor_id.name === doctorName})
     }
 
     static findById(id) {
