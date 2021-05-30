@@ -1,18 +1,20 @@
 class Doctor {
     static all = []
 
-    constructor({name, address}){
-        this.name = name
+    constructor({first_name, last_name, address}){
+        this.first_name = first_name
+        this.last_name = last_name
         this.address = address
         Doctor.all.push(this)
     }
 
     static getAll() {
+        debugger
         return this.all
     }
 
-    static findByName(name) {
-       return this.all.find(function(doctor) {doctor.name === name})
+    static findByName(last_name) {
+       return this.all.find(function(doctor) {doctor.last_name === last_name})
     }
 
     static findById(id) {
@@ -28,10 +30,10 @@ class Doctor {
         this.all.forEach(doc => this.renderDoctor(doc))
     }
 
-    static renderDoctor(doctor) {
+    static renderDoctor(_doc) {
         const h4 = document.createElement("h4")
         const a = document.createElement("a")
-        a.id = `doctor-${doctor.id}`
+        a.id = `doctor-${doc.id}`
         a.innerText = doctor.name
         a.href = "#"
         a.addEventListener("click", (e) => renderDoctors(e, doctor))

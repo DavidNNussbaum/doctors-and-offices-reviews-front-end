@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    buttonShow().addEventListener("click", handleClick)
+    buttonShow().addEventListener("click", DoctorApi.handleClick)
     buttonNew().addEventListener("click", displayForm)
 })
 
 
 const displayForm = () => {
-    if (!commentsForm()) {
+    if (!reviewsForm()) {
         fetchDoctorsForSelect()
         list.insertAdjacentHTML('afterend', `
         <form id="comments-form">
@@ -23,9 +23,9 @@ const displayForm = () => {
             <input type="submit" value="Create">
         </form>
         `)
-        commentsForm().addEventListener("submit", handleSubmit)
+        reviewsForm().addEventListener("submit", handleSubmit)
     } else {
-        commentsForm().remove()
+        reviewsForm().remove()
     }
 }
 
