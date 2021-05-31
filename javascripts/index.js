@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const displayForm = () => {
     if (!reviewsForm()) {
-        fetchDoctorsForSelect()
+        DoctorApi.fetchDoctorsForSelect()
         list.insertAdjacentHTML('afterend', `
-        <form id="comments-form">
+        <form id="reviews-form">
             <h3>Add New Reviews:</h3>
             <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
             <input type="number" name="doctorRating" id="reviews-doctorRating"><br><br>
@@ -23,7 +23,8 @@ const displayForm = () => {
             <input type="submit" value="Create">
         </form>
         `)
-        reviewsForm().addEventListener("submit", handleSubmit)
+        document.getElementById("reviews-form").addEventListener("submit", ReviewApi.handleSubmit)
+        // reviewsForm().addEventListener("submit", handleSubmit)
     } else {
         reviewsForm().remove()
     }

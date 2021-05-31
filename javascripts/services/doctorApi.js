@@ -2,7 +2,11 @@ class DoctorApi {
     static fetchDoctors() {
         fetch('http://localhost:3000/doctors')
         .then(resp => resp.json())
-        .then(json => json.forEach(docObj => Doctor.findOrCreateBy(docObj)))
+        .then(json => json.forEach(docObj => {
+                debugger
+                return Doctor.findOrCreateBy(docObj)
+            }
+        ))
         .catch(handleError)
     }
 
@@ -20,7 +24,10 @@ class DoctorApi {
     static fetchDoctorsForSelect = () => {
         fetch('http://localhost:3000/doctors')
                 .then(resp => resp.json())
-                .then(json => json.map((docObj) => `<option value="${docObj.id}">${docObj.name}</option>`))
+                .then(json => json.data.map((docObj) => {
+                        return `<option value="${docObj.id}">${docObj.attributes.name}</option>`
+                    })
+                )
                 .then(collection => document.querySelector("select#Doctor_id").innerHTML = collection.join(" "))
     }
 
