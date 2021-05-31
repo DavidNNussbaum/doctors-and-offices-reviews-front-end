@@ -64,6 +64,7 @@ const renderReview = (review, docId) => {
     const li = document.createElement("li")
     a.dataset.docId = docId
     li.innerHTML = `
+        <strong class="doctors-name">${docObj.attributes.name}</strong>
         <strong class="reviews-doctorRating">${review.doctor_rating}</strong>
         <span class="reviews-doctorComments">${review.doctor_comments}</span>
         <span class="reviews-doctorOfficeRating">${review.doctor_office_rating}</span><br>
@@ -97,6 +98,7 @@ const handleUpdate = (e) => {
         const doctorOfficeComments = e.target.parentElement.querySelector(".doctorOffice-comments").innerText
          
         e.target.parentElement.innerHTML = `
+            <strong class="doctors-name">${docObj.attributes.name}</strong>
             <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
             <input type="number" name="doctorRating" id="reviews-doctorRating" value="${doctorRating}"><br>
             <label for="reviews-doctorComments">Comments Regarding This Doctor:</label>
@@ -122,6 +124,7 @@ const handleUpdate = (e) => {
 
 const replaceElement = (review, li) => {
     li.innerHTML = `
+        <strong class="doctors-name">${docObj.attributes.name}</strong>
         <strong class="reviews-doctorRating">${review.doctorRating}</strong>
         <span class="reviews-doctorComments">${review.doctorComment}</span>
         <span class="reviews-doctorOfficeRating">${review.doctorOfficeRating}</span>
