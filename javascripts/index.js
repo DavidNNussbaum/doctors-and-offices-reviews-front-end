@@ -14,7 +14,7 @@ const displayUser = () => {
         UserApi.fetchUsersForSelect()
         list.insertAdjacentHTML('afterend', `
         <form id="users-form">
-            <strong class="users-name">${UserApi.useObj.attribute.name}</strong>
+            <strong class="users-name">${UserApi.useObj.attributes.name}</strong>
         </form>
         `)
         document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
@@ -23,7 +23,7 @@ const displayUser = () => {
     }
 }
 
-const userForm = () => {
+const addUserForm = () => {
     if (!userForm()) {
         UserApi.fetchUser()
         list.insertAdjacentHTML('afterend', `
@@ -53,8 +53,8 @@ const displayForm = () => {
         DoctorApi.fetchDoctorsForSelect()
         list.insertAdjacentHTML('afterend', `
         <form id="reviews-form">
-            <strong class="users-name">`Reviews By ${current_user.first_name}`</strong
-            <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
+            <strong class="users-name">Reviews By ${current_user.first_name}</strong
+            <strong class="doctors-name">${DoctorApi.docObj.attributes.name}</strong>
             <h3>Add New Reviews:</h3>
             <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
             <input type="number" name="doctorRating" id="reviews-doctorRating"><br><br>
@@ -76,45 +76,26 @@ const displayForm = () => {
     }
 }
 
-------------------------------------------
-const renderUsers = (users) => {
-    ul().innerHTML += "<h1 id='users-header'>Doctors</h1>"
-    doctors.data.forEach(element => renderDoctor(element));
-}
-
-
-const renderDoctor = (element) => {
-    const h4 = document.createElement("h4")
-    const a = document.createElement("a")
-    a.id = `doctor-${doctor.id}`
-    a.innerText = doctor.name
-    a.href = "#"
-    a.addEventListener("click", (e) => renderReviews(e, doctor))
-    h4.appendChild(a)
-    ul().appendChild(h4)
-    ul().insertAfter(buttonShowReviews().addEventListener("click", displayForm), appendChild(h4))
-}
------------------------------------------
-
 const renderDoctors = (doctors) => {
     ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
     doctors.data.forEach(element => renderDoctor(element));
 }
 
 
-const renderDoctor = (element) => {
+const renderDoctor = (doctor) => {
     const h4 = document.createElement("h4")
     const a = document.createElement("a")
     a.id = `doctor-${doctor.id}`
-    a.innerText = doctor.name
+    a.innerText = doctor.attributes.name
     a.href = "#"
     a.addEventListener("click", (e) => renderReviews(e, doctor))
     h4.appendChild(a)
     ul().appendChild(h4)
-    ul().insertAfter(buttonShowReviews().addEventListener("click", displayForm), appendChild(h4))
+    // ul().insertAfter(buttonShowReviews().addEventListener("click", displayForm), appendChild(h4))
 }
 
-const renderReviews = (e, ReviewApi) => {
+const renderReviews = (e, doctor) => {
+    ReviewApi()
     const nextLiSibling = e.target.nextSibling
     if (nextLiSibling) {
         const children = Array.from(e.target.parentNode.children)
@@ -131,7 +112,7 @@ const renderReview = (review, docId) => {
     const li = document.createElement("li")
     a.dataset.docId = docId
     li.innerHTML = `
-        <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
+        <strong class="doctors-name">${DoctorApi.docObj.attributes.name}</strong>
         <strong class="reviews-doctorRating">${review.doctor_rating}</strong>
         <span class="reviews-doctorComments">${review.doctor_comments}</span>
         <span class="reviews-doctorOfficeRating">${review.doctor_office_rating}</span><br>
@@ -141,8 +122,10 @@ const renderReview = (review, docId) => {
     `
 
     a.parentNode.appendChild(li)
-    document.querySelector(`button.delete-reviews[data-id='${review.id}']`).addEventListener("click", handleDelete)
-    document.querySelector(`button.edit-reviews[data-id='${review.id}']`).addEventListener("click", handleUpdate)
+    if (User.logged_in) {
+       document.querySelector(`button.delete-reviews[data-id='${review.id}']`).addEventListener("click", handleDelete)
+       document.querySelector(`button.edit-reviews[data-id='${review.id}']`).addEventListener("click", handleUpdate)
+    }
 
 }
 
@@ -165,7 +148,7 @@ const handleUpdate = (e) => {
         const doctorOfficeComments = e.target.parentElement.querySelector(".doctorOffice-comments").innerText
          
         e.target.parentElement.innerHTML = `
-            <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
+            <strong class="doctors-name">${DoctorApi.docObj.attributes.name}</strong>
             <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
             <input type="number" name="doctorRating" id="reviews-doctorRating" value="${doctorRating}"><br>
             <label for="reviews-doctorComments">Comments Regarding This Doctor:</label>
@@ -176,11 +159,12 @@ const handleUpdate = (e) => {
             <input type="text" name="doctorComment" id="reviews-doctorComments" value="${doctorOfficeComments}"><br>
             <button class="update-comment" data-id="${revId}">Update</button>
             <button class="delete-comment" data-id="${revId}">Delete</button>
-
+       `
              
-        `
-        document.querySelector(`button.delete-review[data-id='${revId}']`).addEventListener("click", handleDelete)
-        document.querySelector(`button.update-review[data-id='${revId}']`).addEventListener("click", handleUpdate)
+        if (User.logged_in) {
+            document.querySelector(`button.delete-review[data-id='${revId}']`).addEventListener("click", handleDelete)
+            document.querySelector(`button.update-review[data-id='${revId}']`).addEventListener("click", handleUpdate)
+        }
 
 
     } else {
@@ -191,7 +175,7 @@ const handleUpdate = (e) => {
 
 const replaceElement = (review, li) => {
     li.innerHTML = `
-        <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
+        <strong class="doctors-name">${DoctorApi.docObj.attributes.name}</strong>
         <strong class="reviews-doctorRating">${review.doctorRating}</strong>
         <span class="reviews-doctorComments">${review.doctorComment}</span>
         <span class="reviews-doctorOfficeRating">${review.doctorOfficeRating}</span>
@@ -199,10 +183,10 @@ const replaceElement = (review, li) => {
         <button class="edit-review" data-id="${review.id}">Edit</button>
         <button class="delete-review" data-id="${review.id}">Delete</button>
     `
-    if User.logged_in?
+    if (User.logged_in) {
        document.querySelector(`button.delete-review[data-id='${review.id}']`).addEventListener("click", handleDelete)
        document.querySelector(`button.edit-review[data-id='${review.id}']`).addEventListener("click", handleUpdate)
-
+    }
 }
 
 const handleError = (error) => {

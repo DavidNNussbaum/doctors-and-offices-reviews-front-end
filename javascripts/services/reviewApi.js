@@ -1,6 +1,6 @@
 class ReviewApi {
-    static fetchReviews() {
-        fetch('http://localhost:3000/reviews')
+    static fetchReviews(doctor_id) {
+        fetch(`http://localhost:3000/doctors/${doctor_id}/reviews`)
         .then(resp => resp.json())
         .then(json => json.forEach(revObj => Review.findOrCreateBy(revObj)))
         .catch(handleError)

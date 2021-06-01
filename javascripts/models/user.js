@@ -42,4 +42,8 @@ class User {
     renderUsers(use) {
         return use
     }
+
+    logged_in() {
+      return true
+    }
 }
