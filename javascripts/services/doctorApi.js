@@ -3,7 +3,6 @@ class DoctorApi {
         fetch('http://localhost:3000/doctors')
         .then(resp => resp.json())
         .then(json => json.forEach(docObj => {
-                debugger
                 return Doctor.findOrCreateBy(docObj)
             }
         ))
@@ -12,7 +11,7 @@ class DoctorApi {
 
     static handleClick = (e) => {
         if (ul().children.length < 1) {
-            fetch('http://localhost:3000/doctorss')
+            fetch('http://localhost:3000/doctors')
             .then(resp => resp.json())
             .then(json => renderDoctors(json))
             .catch(handleError)
@@ -25,10 +24,10 @@ class DoctorApi {
         fetch('http://localhost:3000/doctors')
                 .then(resp => resp.json())
                 .then(json => json.data.map((docObj) => {
-                        return `<option value="${docObj.id}">${docObj.attributes.name}</option>`
+                        return `<option value="${docObj.id}">${docObj.attribute.name}</option>`
                     })
                 )
-                .then(collection => document.querySelector("select#Doctor_id").innerHTML = collection.join(" "))
+                .then(collection => document.querySelector("select#Doctor_id").innerHTML = collection.join(""))
     }
 
     static handleError(error) {

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    buttonShow().addEventListener("click", DoctorApi.handleClick)
-    buttonNew().addEventListener("click", displayForm)
+    buttonSignLog().addEventListener("click", UserApi.handleClick)
+    buttonShowDoctors().addEventListener("click", DoctorApi.handleClick )
+    buttonShowReviews().addEventListener("click", displayForm)
 })
 
 
@@ -9,6 +10,7 @@ const displayForm = () => {
         DoctorApi.fetchDoctorsForSelect()
         list.insertAdjacentHTML('afterend', `
         <form id="reviews-form">
+            <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
             <h3>Add New Reviews:</h3>
             <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
             <input type="number" name="doctorRating" id="reviews-doctorRating"><br><br>
@@ -32,11 +34,11 @@ const displayForm = () => {
 
 const renderDoctors = (doctors) => {
     ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
-    doctors.forEach(element => renderDoctor(element));
+    doctors.data.forEach(element => renderDoctor(element));
 }
 
 
-const renderDoctor = (doctor) => {
+const renderDoctor = (element) => {
     const h4 = document.createElement("h4")
     const a = document.createElement("a")
     a.id = `doctor-${doctor.id}`
@@ -64,7 +66,7 @@ const renderReview = (review, docId) => {
     const li = document.createElement("li")
     a.dataset.docId = docId
     li.innerHTML = `
-        <strong class="doctors-name">${docObj.attributes.name}</strong>
+        <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
         <strong class="reviews-doctorRating">${review.doctor_rating}</strong>
         <span class="reviews-doctorComments">${review.doctor_comments}</span>
         <span class="reviews-doctorOfficeRating">${review.doctor_office_rating}</span><br>
@@ -98,7 +100,7 @@ const handleUpdate = (e) => {
         const doctorOfficeComments = e.target.parentElement.querySelector(".doctorOffice-comments").innerText
          
         e.target.parentElement.innerHTML = `
-            <strong class="doctors-name">${docObj.attributes.name}</strong>
+            <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
             <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
             <input type="number" name="doctorRating" id="reviews-doctorRating" value="${doctorRating}"><br>
             <label for="reviews-doctorComments">Comments Regarding This Doctor:</label>
@@ -124,7 +126,7 @@ const handleUpdate = (e) => {
 
 const replaceElement = (review, li) => {
     li.innerHTML = `
-        <strong class="doctors-name">${docObj.attributes.name}</strong>
+        <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
         <strong class="reviews-doctorRating">${review.doctorRating}</strong>
         <span class="reviews-doctorComments">${review.doctorComment}</span>
         <span class="reviews-doctorOfficeRating">${review.doctorOfficeRating}</span>
