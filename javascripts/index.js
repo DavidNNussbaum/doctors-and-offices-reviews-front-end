@@ -1,8 +1,51 @@
 document.addEventListener("DOMContentLoaded", () => {
     buttonSignLog().addEventListener("click", UserApi.handleClick)
     buttonShowDoctors().addEventListener("click", DoctorApi.handleClick )
-    buttonShowReviews().addEventListener("click", displayForm)
+    // buttonShowReviews().addEventListener("click", displayForm)
 })
+
+
+const renderUser = (user) => {
+    ul().innerHTML += "<h1 id='users-header'></h1>"
+}
+
+const displayUser = () => {
+    if (!usersForm()) {
+        UserApi.fetchUsersForSelect()
+        list.insertAdjacentHTML('afterend', `
+        <form id="users-form">
+            <strong class="users-name">${UserApi.useObj.attribute.name}</strong>
+        </form>
+        `)
+        document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
+    } else {
+        usersForm().remove()
+    }
+}
+
+const userForm = () => {
+    if (!userForm()) {
+        UserApi.fetchUser()
+        list.insertAdjacentHTML('afterend', `
+        <form id="user-form">
+            <label for="users-firstName">Your First Name:</label>
+            <input type="string" name="userFirstName" id="users-firstName"><br><br>
+            <label for="users-email">Your email:</label>
+            <input type="string" name="usersEmail" id="users-email"><br><br>
+            <label for="users-password">Your Password:</label>
+            <input type="string" name="usersPassword" id="users-password"><br><br>
+            <label for="users-confirmPassword">Confirm Your Password:</label>
+            <input type="string" name="usersConfirmPassword" id="users-confirmPassword"><br><br>
+            <select id="user_id">
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+        `)
+        document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
+    } else {
+        userForm().remove()
+    }
+}
 
 
 const displayForm = () => {
@@ -10,6 +53,7 @@ const displayForm = () => {
         DoctorApi.fetchDoctorsForSelect()
         list.insertAdjacentHTML('afterend', `
         <form id="reviews-form">
+            <strong class="users-name">`Reviews By ${current_user.first_name}`</strong
             <strong class="doctors-name">${DoctorApi.docObj.attribute.name}</strong>
             <h3>Add New Reviews:</h3>
             <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
@@ -32,6 +76,26 @@ const displayForm = () => {
     }
 }
 
+------------------------------------------
+const renderUsers = (users) => {
+    ul().innerHTML += "<h1 id='users-header'>Doctors</h1>"
+    doctors.data.forEach(element => renderDoctor(element));
+}
+
+
+const renderDoctor = (element) => {
+    const h4 = document.createElement("h4")
+    const a = document.createElement("a")
+    a.id = `doctor-${doctor.id}`
+    a.innerText = doctor.name
+    a.href = "#"
+    a.addEventListener("click", (e) => renderReviews(e, doctor))
+    h4.appendChild(a)
+    ul().appendChild(h4)
+    ul().insertAfter(buttonShowReviews().addEventListener("click", displayForm), appendChild(h4))
+}
+-----------------------------------------
+
 const renderDoctors = (doctors) => {
     ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
     doctors.data.forEach(element => renderDoctor(element));
@@ -47,6 +111,7 @@ const renderDoctor = (element) => {
     a.addEventListener("click", (e) => renderReviews(e, doctor))
     h4.appendChild(a)
     ul().appendChild(h4)
+    ul().insertAfter(buttonShowReviews().addEventListener("click", displayForm), appendChild(h4))
 }
 
 const renderReviews = (e, ReviewApi) => {
@@ -134,8 +199,9 @@ const replaceElement = (review, li) => {
         <button class="edit-review" data-id="${review.id}">Edit</button>
         <button class="delete-review" data-id="${review.id}">Delete</button>
     `
-    document.querySelector(`button.delete-review[data-id='${review.id}']`).addEventListener("click", handleDelete)
-    document.querySelector(`button.edit-review[data-id='${review.id}']`).addEventListener("click", handleUpdate)
+    if User.logged_in?
+       document.querySelector(`button.delete-review[data-id='${review.id}']`).addEventListener("click", handleDelete)
+       document.querySelector(`button.edit-review[data-id='${review.id}']`).addEventListener("click", handleUpdate)
 
 }
 
