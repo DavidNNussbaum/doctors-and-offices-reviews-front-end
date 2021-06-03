@@ -10,7 +10,7 @@ class UserApi {
         if (ul().children.length < 1) {
             fetch('http://localhost:3000/users')
             .then(resp => resp.json())
-            .then(json => fetchUser(json))
+            .then(json => renderUser(json))
             .catch(handleError)
         } else {
             ul().innerHTML = ""

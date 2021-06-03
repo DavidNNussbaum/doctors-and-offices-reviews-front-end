@@ -1,8 +1,11 @@
 class ReviewApi {
-    static fetchReviews(doctor_id) {
+    static fetchReviews(doctor_id, renderReview ) {
         fetch(`http://localhost:3000/doctors/${doctor_id}/reviews`)
         .then(resp => resp.json())
-        .then(json => json.forEach(revObj => Review.findOrCreateBy(revObj)))
+        .then(json => json.forEach(revObj => { 
+            let review = Review.findOrCreateBy(revObj)
+            renderReview(review, doctor_id)
+        }))
         .catch(handleError)
     }
 
@@ -37,21 +40,23 @@ class ReviewApi {
         .then(resp => resp.json())
         .then(json => {
             e.target.parentNode.remove()
-            alert(json.message)
+            
         })
     }
     
     static handleFetchUpdate = (e) => {
         const data = {
-            id: e.target.dataset.id,
-            doctorRating: e.target.parentElement.querySelector("#comments-doctorRating").value,
-            doctorComments: e.target.parentElement.querySelector("#comments-doctorComments").value,
-            doctorOfficeRating: e.target.parentElement.querySelector("#comments-doctorOfficeRating").value,
-            doctorOfficeComments: e.target.parentElement.querySelector("#comments-doctorOfficeComments").value
-             
+            review: {
+                doctor_rating: e.target.parentElement.querySelector("#reviews-doctorRating").value,
+                doctor_comments: e.target.parentElement.querySelector("#reviews-doctorComments").value,
+                doctor_office_rating: e.target.parentElement.querySelector("#reviews-doctorOfficeRating").value,
+                doctor_office_comments: e.target.parentElement.querySelector("#reviews-doctorOfficeComments").value
+            }
         }
-    
-        fetch(`http://localhost:3000/reviews/${data.id}`, {
+         
+
+
+        fetch(`http://localhost:3000/reviews/${e.target.dataset.id}`, {
             method: 'PATCH',
             headers: {
                 "Content-Type": 'application/json'
@@ -60,7 +65,7 @@ class ReviewApi {
         })
         .then(resp => resp.json())
         .then(json => replaceElement(json, e.target.parentElement))
-        .catch(err => alert(err))
+        // .catch(err => alert(err))
     }
     
     static handleError(error) {

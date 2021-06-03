@@ -1,13 +1,14 @@
 class Review {
     static all = []
 
-    constructor({doctor_rating, doctor_comments, doctor_office_rating, doctor_office_comments, doctor_id, user_id }){
+    constructor({doctor_rating, doctor_comments, doctor_office_rating, doctor_office_comments, doctor_id, user_id, id }){
         this.doctor_rating = doctor_rating
         this.doctor_comments = doctor_comments
         this.doctor_office_rating = doctor_office_rating
         this.doctor_office_comments = doctor_office_comments
         this.doctor_id = doctor_id
         this.user_id = user_id
+        this.id = id
         Review.all.push(this)
     }
      
@@ -16,7 +17,7 @@ class Review {
     }
 
     static findByName(doctorName) {
-       return this.all.find(function(doctor_id) { this.doctor_id.name === doctorName})
+       return this.all.find(function(doctor) { doctor.name === doctorName})
     }
 
     static findById(id) {

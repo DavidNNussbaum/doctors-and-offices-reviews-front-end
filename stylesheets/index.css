@@ -1,5 +1,6 @@
 html {
-    background: linear-gradient(200deg, rgb(138, 249, 199), rgb(87, 228, 249));
+    /* background: linear-gradient(200deg, rgb(138, 249, 199), rgb(87, 228, 249)); */
+    background: rgb(124,252,0);
     background-attachment: fixed;
     height: 100%;
     min-height: 100%;
@@ -12,3 +13,26 @@ html {
   .hide {
     display: none;
   }
+
+  h1 {text-align: center;}
+  h2 {text-align: center;}
+
+  #button-signLog {
+    margin-left: 100px;
+  }
+   
+  #button-showDoctors { 
+    margin-left: 50px;
+   }
+
+   #doctors-header {
+    text-align: center;
+    font-size: 30px;
+    text-decoration: underline;
+   }
+
+   #doctors-list {
+    text-align: center;
+    font-size: 20px;
+    list-style-type: none;
+   }
