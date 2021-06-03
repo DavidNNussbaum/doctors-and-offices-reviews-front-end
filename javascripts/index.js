@@ -107,8 +107,12 @@ const renderReviews = (e, doctor) => {
 
 }
 const renderReview = (review, docId) => {
+    if (document.querySelector(`#review-li-${review.id}`)){
+        return
+    }git
     const a = document.getElementById(`doctor-${docId}`)
     const li = document.createElement("li")
+    li.id = `review-li-${review.id}`
     a.dataset.docId = docId
     a.dataset.id = review.id
 
