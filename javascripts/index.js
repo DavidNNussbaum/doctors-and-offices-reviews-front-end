@@ -69,6 +69,7 @@ const displayForm = () => {
             <input type="submit" value="Create">
         </form>
         `)
+        Doctor.dropDownOptions.forEach(optionTag => reviewSelectDoctor().append(optionTag))
         document.getElementById("reviews-form").addEventListener("submit", ReviewApi.handleSubmit)
         // reviewsForm().addEventListener("submit", handleSubmit)
     } else {

@@ -5,6 +5,8 @@ class DoctorApi {
         .then(json => json.forEach(docObj => {
                 return Doctor.findOrCreateBy(docObj)
             }
+            docObj.addToDropDown()
+            docObj.render()
         ))
         .catch(handleError)
     }

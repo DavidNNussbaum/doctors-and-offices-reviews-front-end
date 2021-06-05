@@ -42,6 +42,20 @@ class Doctor {
     }
 
     renderDoctors(doc) {
-        return doc
+        const h4 = document.createElement("h4")
+        const a = document.createElement("a")
+        a.id = `category-${this.id}`
+        a.innerText = this.name
+        a.href = "#"
+        a.addEventListener("click", (e) => renderReviews(e, this))
+        h4.appendChild(a)
+        ul().appendChild(h4)
+    }
+
+    addToDropDown() {
+        const option = document.createElement("option")
+        option.value = this.id
+        option.innerText = this.name
+        reviewSelectDoctor().append(option)
     }
 }

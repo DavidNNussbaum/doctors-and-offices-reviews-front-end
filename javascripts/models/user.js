@@ -1,9 +1,9 @@
 class User {
     static all = []
 
-    constructor({email, password_digest}){
-        this.email = email
-        this.password_digest = password_digest
+    constructor({id, first_name}){
+        this.id = id
+        this.first_name = first_name
         User.all.push(this)
     }
 
