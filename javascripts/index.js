@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    buttonSignLog().addEventListener("click", UserApi.handleClick)
+    buttonSignLog().addEventListener("click", addUserForm)
     buttonShowDoctors().addEventListener("click", DoctorApi.handleClick )
     // buttonShowReviews().addEventListener("click", displayForm)
 })
 
 
 const renderUser = (user) => {
-    ul().innerHTML += "<h1 id='user-header'></h1>"
+    ul().innerHTML += `<h1 id='user-header'>Hello ${user.first_name}</h1>`
 }
 
 const displayUser = () => {
@@ -36,12 +36,10 @@ const addUserForm = () => {
             <input type="string" name="userPassword" id="user-password"><br><br>
             <label for="user-confirmPassword">Confirm Your Password:</label>
             <input type="string" name="userConfirmPassword" id="user-confirmPassword"><br><br>
-            <select id="user_id">
-            </select>
             <input type="submit" value="Submit">
         </form>
         `)
-        document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
+        document.getElementById("user-form").addEventListener("submit", UserApi.handleSubmit)
     } else {
         userForm().remove()
     }
@@ -110,7 +108,7 @@ const renderReviews = (e, doctor) => {
 const renderReview = (review, docId) => {
     if (document.querySelector(`#review-li-${review.id}`)){
         return
-    }git
+    }
     const a = document.getElementById(`doctor-${docId}`)
     const li = document.createElement("li")
     li.id = `review-li-${review.id}`

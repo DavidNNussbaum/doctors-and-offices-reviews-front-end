@@ -3,11 +3,12 @@ class DoctorApi {
         fetch('http://localhost:3000/doctors')
         .then(resp => resp.json())
         .then(json => json.forEach(docObj => {
-                return Doctor.findOrCreateBy(docObj)
-            }
             docObj.addToDropDown()
             docObj.render()
-        ))
+                return Doctor.findOrCreateBy(docObj)
+            })
+            
+        )
         .catch(handleError)
     }
 
