@@ -67,7 +67,7 @@ const displayForm = () => {
             <input type="submit" value="Create">
         </form>
         `)
-        Doctor.dropDownOptions.forEach(optionTag => reviewSelectDoctor().append(optionTag))
+        // Doctor.dropDownOptions.forEach(optionTag => reviewSelectDoctor().append(optionTag))
         document.getElementById("reviews-form").addEventListener("submit", ReviewApi.handleSubmit)
         // reviewsForm().addEventListener("submit", handleSubmit)
     } else {
@@ -77,10 +77,27 @@ const displayForm = () => {
 
 const renderDoctors = (doctors) => {
     ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
+    renderDoctorsInDropdown(doctors.data)
     doctors.data.forEach(element => renderDoctor(element));
+
 }
 
+const renderDoctorsInDropdown = (doctors) => {
+     const select = document.createElement("select")
+     select.id = "doctor-dropdown"
+     doctors.forEach(doctor => {
+         const option = document.createElement("option")
+         option.value = doctor.id
+         option.text = doctor.attributes.name
+         select.add(option)
+     })
+     ul().appendChild(select)
+     select.addEventListener("change", handleDoctorDropdownChange)
+}
 
+const handleDoctorDropdownChange = (e) => {
+    ReviewApi.fetchReviews(e.target.value, renderReview)
+}
 const renderDoctor = (doctor) => {
     const h4 = document.createElement("h4")
     const a = document.createElement("a")
@@ -106,6 +123,7 @@ const renderReviews = (e, doctor) => {
 
 }
 const renderReview = (review, docId) => {
+    console.log('hi')
     if (document.querySelector(`#review-li-${review.id}`)){
         return
     }
