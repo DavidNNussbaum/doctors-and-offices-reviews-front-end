@@ -196,10 +196,10 @@ const replaceElement = (review, li) => {
      
     li.innerHTML = `
         
-        <strong class="reviews-doctorRating">${review.doctor_rating}</strong>
-        <span class="reviews-doctorComments">${review.doctor_comments}</span>
-        <span class="reviews-doctorOfficeRating">${review.doctor_office_rating}</span>
-        <span class="reviews-doctorOfficeComments">${review.doctor_office_comments}</span>
+    Doctor Rating (1-10): <strong class="reviews-doctorRating">${review.doctor_rating}</strong>
+    Doctor Comments: <span class="reviews-doctorComments">${review.doctor_comments}</span>
+    Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${review.doctor_office_rating}</span>
+    Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${review.doctor_office_comments}</span>
         <button class="edit-review" data-id="${review.id}">Edit</button>
         <button class="delete-review" data-id="${review.id}">Delete</button>
     `
