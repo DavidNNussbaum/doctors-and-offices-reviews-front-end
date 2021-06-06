@@ -1,15 +1,17 @@
 class Doctor {
     static all = []
 
-    constructor({first_name, last_name, address}){
+    constructor({name, first_name, last_name, address, id}){
         this.first_name = first_name
         this.last_name = last_name
         this.address = address
+        this.name = name
+        this.id = id
         Doctor.all.push(this)
     }
 
     static getAll() {
-        debugger
+
         return this.all
     }
 
@@ -25,12 +27,12 @@ class Doctor {
         return this.findByName(doctorObj.name) || new Doctor(doctorObj)
     }
 
-    static render() {
+    render() {
         ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
         this.all.forEach(doc => this.renderDoctor(doc))
     }
 
-    static renderDoctor(_doc) {
+    renderDoctor(_doc) {
         const h4 = document.createElement("h4")
         const a = document.createElement("a")
         a.id = `doctor-${doc.id}`
@@ -52,45 +54,74 @@ class Doctor {
         ul().appendChild(h4)
     }
 
-    addToDropDown() {
+    renderOptionTag() {
         const option = document.createElement("option")
         option.value = this.id
         option.innerText = this.name
-        reviewSelectDoctor().append(option)
+        return option
+        // reviewSelectDoctor().append(option)
     }
 
-    renderDoctors = (doctors) => {
-        ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
-        renderDoctorsInDropdown(doctors.data)
-        doctors.data.forEach(element => renderDoctor(element));
-    
-    }
-
-    const renderDoctorsInDropdown = (doctors) => {
+    static renderDoctorsInDropdown = (doctors) => {
         const select = document.createElement("select")
         select.id = "doctor-dropdown"
+        const option = document.createElement("option")
+        option.innerText = "Press To Choose An Option."
+            select.add(option)
         doctors.forEach(doctor => {
             const option = document.createElement("option")
             option.value = doctor.id
-            option.text = doctor.attributes.name
+            option.innerText = doctor.name
             select.add(option)
         })
         ul().appendChild(select)
-        select.addEventListener("change", handleDoctorDropdownChange)
+        const br = document.createElement("br")
+        ul().appendChild(br)
+        const newDoctorButton = document.createElement("button")
+        newDoctorButton.id = "new-doctor-button" 
+        newDoctorButton.innerText = "Create a New Doctor"
+        ul().appendChild(newDoctorButton)
+        newDoctorButton.addEventListener('click', this.displayForm)
+        select.addEventListener("change", this.handleDoctorDropdownChange)
    }
-   
-   handleDoctorDropdownChange = (e) => {
-       ReviewApi.fetchReviews(e.target.value, renderReview)
+
+   renderDoctors = (doctors) => {
+    ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
+    renderDoctorsInDropdown(doctors.data)
+    // doctors.data.forEach(element => renderDoctor(element));
+
+}
+   static handleDoctorDropdownChange = (e) => {
+    if (document.querySelector(".doctor-container")) {
+    document.querySelector(".doctor-container").remove()
+}
+    const div = document.createElement("div")
+    div.classList.add("doctor-container")
+    div.id = `doctor-${e.target.value}`
+    ul().appendChild(div)
+       ReviewApi.fetchReviews(e.target.value)
    }
-   renderDoctor = (doctor) => {
-       const h4 = document.createElement("h4")
-       const a = document.createElement("a")
-       a.id = `doctor-${doctor.id}`
-       a.innerText = doctor.attributes.name
-       a.href = "#"
-       a.addEventListener("click", (e) => renderReviews(e, doctor))
-       h4.appendChild(a)
-       ul().appendChild(h4)
-       // ul().insertAfter(buttonShowReviews().addEventListener("click", displayForm), appendChild(h4))
-   }
+
+   static displayForm = () => {
+    if (!doctorForm()) {
+        ul().insertAdjacentHTML('afterend', `
+        <form id="doctor-form">
+            
+            <h3>Add New Doctor:</h3>
+            <label for="doctor-firstName">Doctor's First Name: </label>
+            <input type="text" name="doctor-firstName" id="doctor-firstName"><br><br>
+            <label for="doctor-lastName">Doctor's Last Name: </label>
+            <input type="text" name="doctor-lastName" id="doctor-lastName"><br><br>
+            <label for="doctor-address">Doctor's Address:</label>
+            <input type="text" name="doctor-address" id="doctor-address"><br><br>
+            <input type="submit" value="Create">
+        </form>
+        `)
+        document.getElementById("doctor-form").addEventListener("submit", DoctorApi.handleSubmit)
+         
+    } else {
+        doctorForm().remove()
+    }
+}
+    
 }

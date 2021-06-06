@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    buttonSignLog().addEventListener("click", addUserForm)
+    buttonSignLog().addEventListener("click", User.addUserForm)
     buttonShowDoctors().addEventListener("click", DoctorApi.handleClick )
     // buttonShowReviews().addEventListener("click", displayForm)
 })

@@ -7,6 +7,7 @@ class UserApi {
     }
 
     static handleSubmit = (e) => {
+        e.preventDefault()
         if (ul().children.length < 1) {
             const payload = {
                 user: {
@@ -15,7 +16,8 @@ class UserApi {
                     password: e.target.parentElement.querySelector("#user-password").value,
                     password_confirmation: e.target.parentElement.querySelector("#user-confirmPassword").value
                 }
-            }
+            } 
+            
             fetch('http://localhost:3000/users', {
                 method: 'POST',
                 headers: {
@@ -29,7 +31,8 @@ class UserApi {
             .then(json => {
                 let user = User.findOrCreateBy(json.data.attributes)
                 document.querySelector("#user-form").remove()
-                renderUser(user)
+                user.renderUser();
+                DoctorApi.fetchDoctors()
             })
             .catch(handleError)
         } else {

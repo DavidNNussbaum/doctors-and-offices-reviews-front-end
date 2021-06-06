@@ -28,12 +28,12 @@ class Review {
         return this.findByName(reviewObj.name) || new Review(reviewObj)
     }
 
-    static render() {
+    render() {
         ul().innerHTML += "<h1 id='reviewss-header'>Reviews</h1>"
         this.all.forEach(rev => this.renderCategory(rev))
     }
 
-    static renderReview(review) {
+    renderReview(review) {
         const h4 = document.createElement("h4")
         const a = document.createElement("a")
         a.id = `review-${review.id}`
@@ -89,31 +89,31 @@ class Review {
         // }
     
     }
-    renderReview = (review, docId) => {
-        console.log('hi')
-        if (document.querySelector(`#review-li-${review.id}`)){
+    renderReview = (docId) => {
+  
+        if (document.querySelector(`#review-li-${this.id}`)){
             return
         }
-        const a = document.getElementById(`doctor-${docId}`)
+        const div = document.getElementById(`doctor-${docId}`)
         const li = document.createElement("li")
-        li.id = `review-li-${review.id}`
-        a.dataset.docId = docId
-        a.dataset.id = review.id
+        li.id = `review-li-${this.id}`
+        div.dataset.docId = docId
+        div.dataset.id = this.id
     
         li.innerHTML = `
-            Doctor Rating (1-10): <strong class="reviews-doctorRating">${review.doctor_rating}</strong><br>
-            Doctor Comments: <span class="reviews-doctorComments">${review.doctor_comments}</span><br>
-            Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${review.doctor_office_rating}</span><br>
-            Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${review.doctor_office_comments}</span><br>
-            <button class="edit-review" data-id="${review.id}">Edit</button>
-            <button class="delete-review" data-id="${review.id}">Delete</button><br>
+            Doctor Rating (1-10): <strong class="reviews-doctorRating">${this.doctor_rating}</strong><br>
+            Doctor Comments: <span class="reviews-doctorComments">${this.doctor_comments}</span><br>
+            Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${this.doctor_office_rating}</span><br>
+            Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${this.doctor_office_comments}</span><br>
+            <button class="edit-review" data-id="${this.id}">Edit</button>
+            <button class="delete-review" data-id="${this.id}">Delete</button><br>
         `
     
-        a.parentNode.appendChild(li)
+        div.appendChild(li)
         // if (User.logged_in) {
              
-           document.querySelector(`button.delete-review[data-id='${review.id}']`).addEventListener("click", ReviewApi.handleDelete)
-           document.querySelector(`button.edit-review[data-id='${review.id}']`).addEventListener("click", handleUpdate)
+           document.querySelector(`button.delete-review[data-id='${this.id}']`).addEventListener("click", ReviewApi.handleDelete)
+           document.querySelector(`button.edit-review[data-id='${this.id}']`).addEventListener("click", this.handleUpdate)
         // }
     
     }
@@ -147,7 +147,7 @@ class Review {
               
             // if (User.logged_in) {
                 document.querySelector(`button.delete-review[data-id='${revId}']`).addEventListener("click", ReviewApi.handleDelete)
-                document.querySelector(`button.update-review[data-id='${revId}']`).addEventListener("click", handleUpdate)
+                document.querySelector(`button.update-review[data-id='${revId}']`).addEventListener("click", this.handleUpdate)
             // }
     
     
@@ -157,20 +157,20 @@ class Review {
     }
     
     
-    replaceElement = (review, li) => {
+    replaceElement = (li) => {
          
         li.innerHTML = `
             
-        Doctor Rating (1-10): <strong class="reviews-doctorRating">${review.doctor_rating}</strong>
-        Doctor Comments: <span class="reviews-doctorComments">${review.doctor_comments}</span>
-        Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${review.doctor_office_rating}</span>
-        Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${review.doctor_office_comments}</span>
-            <button class="edit-review" data-id="${review.id}">Edit</button>
-            <button class="delete-review" data-id="${review.id}">Delete</button>
+        Doctor Rating (1-10): <strong class="reviews-doctorRating">${this.doctor_rating}</strong>
+        Doctor Comments: <span class="reviews-doctorComments">${this.doctor_comments}</span>
+        Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${this.doctor_office_rating}</span>
+        Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${this.doctor_office_comments}</span>
+            <button class="edit-review" data-id="${this.id}">Edit</button>
+            <button class="delete-review" data-id="${this.id}">Delete</button>
         `
         // if (User.logged_in) {
-           document.querySelector(`button.delete-review[data-id='${review.id}']`).addEventListener("click", ReviewApi.handleDelete)
-           document.querySelector(`button.edit-review[data-id='${review.id}']`).addEventListener("click", handleUpdate)
+           document.querySelector(`button.delete-review[data-id='${this.id}']`).addEventListener("click", ReviewApi.handleDelete)
+           document.querySelector(`button.edit-review[data-id='${this.id}']`).addEventListener("click", this.handleUpdate)
         // }
     }
 }

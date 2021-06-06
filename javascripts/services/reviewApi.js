@@ -2,9 +2,9 @@ class ReviewApi {
     static fetchReviews(doctor_id, renderReview ) {
         fetch(`http://localhost:3000/doctors/${doctor_id}/reviews`)
         .then(resp => resp.json())
-        .then(json => json.forEach(revObj => { 
-            let review = Review.findOrCreateBy(revObj)
-            renderReview(review, doctor_id)
+        .then(json => json.data.forEach(revObj => { 
+            let review = Review.findOrCreateBy(revObj.attributes)
+            review.renderReview(doctor_id)
         }))
         .catch(handleError)
     }
@@ -45,6 +45,7 @@ class ReviewApi {
     }
     
     static handleFetchUpdate = (e) => {
+        e.preventDefault()
         const data = {
             review: {
                 doctor_rating: e.target.parentElement.querySelector("#reviews-doctorRating").value,
@@ -64,7 +65,9 @@ class ReviewApi {
             body: JSON.stringify(data)
         })
         .then(resp => resp.json())
-        .then(json => replaceElement(json, e.target.parentElement))
+        .then(json => {
+           const review = Review.findOrCreateBy(json)
+            review.replaceElement(e.target.parentElement)})
         // .catch(err => alert(err))
     }
     

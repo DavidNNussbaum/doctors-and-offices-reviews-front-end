@@ -2,25 +2,35 @@ class DoctorApi {
     static fetchDoctors() {
         fetch('http://localhost:3000/doctors')
         .then(resp => resp.json())
-        .then(json => json.forEach(docObj => {
-            docObj.addToDropDown()
-            docObj.render()
-                return Doctor.findOrCreateBy(docObj)
-            })
-            
-        )
+        .then(json => json.data.map(docObj => {
+            return Doctor.findOrCreateBy(docObj.attributes)
+        }))
+        .then(doctors => Doctor.renderDoctorsInDropdown(doctors))
         .catch(handleError)
     }
 
-    static handleClick = (e) => {
-        if (ul().children.length < 1) {
-            fetch('http://localhost:3000/doctors')
-            .then(resp => resp.json())
-            .then(json => renderDoctors(json))
-            .catch(handleError)
-        } else {
-            ul().innerHTML = ""
-        }
+    static handleSubmit = (e) => {
+        e.preventDefault()
+        const data = {
+            doctor: {
+                first_name: e.target.parentElement.querySelector("#doctor-firstName").value,
+                last_name: e.target.parentElement.querySelector("#doctor-lastName").value,
+                address: e.target.parentElement.querySelector("#doctor-address").value,
+                 
+            }
+        } 
+         
+        fetch('http://localhost:3000/doctors', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(resp => resp.json())
+        .then(json => Doctor.renderDoctors(json))
+        .catch(handleError)
+         
     }
     
     static fetchDoctorsForSelect = () => {

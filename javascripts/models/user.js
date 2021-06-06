@@ -24,45 +24,43 @@ class User {
         return this.findById(userObj.id) || new User(userObj)
     }
 
-    static render() {
+    render() {
         ul().innerHTML += "<h1 id='users-header'>Users</h1>"
         this.all.forEach(use => this.renderCategory(use))
     }
 
-    static renderUser(user) {
-        const h4 = document.createElement("h4")
-        const a = document.createElement("a")
-        a.id = `user-${user.id}`
-        a.innerText = user.email
-        a.href = "#"
-        a.addEventListener("click", (e) => renderUser(e, user))
-        h4.appendChild(a)
-        ul().appendChild(h4)
+    // renderUser(user) {
+    //     const h4 = document.createElement("h4")
+    //     const a = document.createElement("a")
+    //     a.id = `user-${user.id}`
+    //     a.innerText = user.email
+    //     a.href = "#"
+    //     a.addEventListener("click", (e) => renderUser(e, user))
+    //     h4.appendChild(a)
+    //     ul().appendChild(h4)
+    // }
+
+    renderUser = () => {
+        ul().innerHTML += `<h1 id='user-header'>${this.first_name}'s Doctors and Reviews</h1>`
     }
 
-    renderUser = (user) => {
-        ul().innerHTML += `<h1 id='user-header'>Hello ${user.first_name}</h1>`
-    }
-
-    renderUsers(use) {
-        return use
-    }
+    
 
     displayUser = () => {
-        if (!userForm()) {
-            UserApi.fetchUserForSelect()
-            list.insertAdjacentHTML('afterend', `
-            <form id="user-form">
-                <strong class="user-name">${UserApi.useObj.attributes.name}</strong>
-            </form>
-            `)
-            document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
-        } else {
-            usersForm().remove()
-        }
+        // if (!userForm()) {
+        //     UserApi.fetchUserForSelect()
+        //     list.insertAdjacentHTML('afterend', `
+        //     <form id="user-form">
+        //         <strong class="user-name">${UserApi.useObj.attributes.name}</strong>
+        //     </form>
+        //     `)
+        //     document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
+        // } else {
+        //     usersForm().remove()
+        // }
     }
 
-    addUserForm = () => {
+    static addUserForm = () => {
         if (!userForm()) {
             UserApi.fetchUser()
             list.insertAdjacentHTML('afterend', `
