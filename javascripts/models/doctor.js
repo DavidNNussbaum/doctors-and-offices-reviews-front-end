@@ -58,4 +58,39 @@ class Doctor {
         option.innerText = this.name
         reviewSelectDoctor().append(option)
     }
+
+    renderDoctors = (doctors) => {
+        ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
+        renderDoctorsInDropdown(doctors.data)
+        doctors.data.forEach(element => renderDoctor(element));
+    
+    }
+
+    const renderDoctorsInDropdown = (doctors) => {
+        const select = document.createElement("select")
+        select.id = "doctor-dropdown"
+        doctors.forEach(doctor => {
+            const option = document.createElement("option")
+            option.value = doctor.id
+            option.text = doctor.attributes.name
+            select.add(option)
+        })
+        ul().appendChild(select)
+        select.addEventListener("change", handleDoctorDropdownChange)
+   }
+   
+   handleDoctorDropdownChange = (e) => {
+       ReviewApi.fetchReviews(e.target.value, renderReview)
+   }
+   renderDoctor = (doctor) => {
+       const h4 = document.createElement("h4")
+       const a = document.createElement("a")
+       a.id = `doctor-${doctor.id}`
+       a.innerText = doctor.attributes.name
+       a.href = "#"
+       a.addEventListener("click", (e) => renderReviews(e, doctor))
+       h4.appendChild(a)
+       ul().appendChild(h4)
+       // ul().insertAfter(buttonShowReviews().addEventListener("click", displayForm), appendChild(h4))
+   }
 }

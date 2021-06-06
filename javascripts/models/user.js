@@ -40,9 +40,50 @@ class User {
         ul().appendChild(h4)
     }
 
+    renderUser = (user) => {
+        ul().innerHTML += `<h1 id='user-header'>Hello ${user.first_name}</h1>`
+    }
+
     renderUsers(use) {
         return use
     }
+
+    displayUser = () => {
+        if (!userForm()) {
+            UserApi.fetchUserForSelect()
+            list.insertAdjacentHTML('afterend', `
+            <form id="user-form">
+                <strong class="user-name">${UserApi.useObj.attributes.name}</strong>
+            </form>
+            `)
+            document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
+        } else {
+            usersForm().remove()
+        }
+    }
+
+    addUserForm = () => {
+        if (!userForm()) {
+            UserApi.fetchUser()
+            list.insertAdjacentHTML('afterend', `
+            <form id="user-form">
+                <label for="user-firstName">Your First Name:</label>
+                <input type="string" name="userFirstName" id="user-firstName"><br><br>
+                <label for="user-email">Your email:</label>
+                <input type="string" name="userEmail" id="user-email"><br><br>
+                <label for="user-password">Your Password:</label>
+                <input type="string" name="userPassword" id="user-password"><br><br>
+                <label for="user-confirmPassword">Confirm Your Password:</label>
+                <input type="string" name="userConfirmPassword" id="user-confirmPassword"><br><br>
+                <input type="submit" value="Submit">
+            </form>
+            `)
+            document.getElementById("user-form").addEventListener("submit", UserApi.handleSubmit)
+        } else {
+            userForm().remove()
+        }
+    }
+    
 
     logged_in() {
       return true
