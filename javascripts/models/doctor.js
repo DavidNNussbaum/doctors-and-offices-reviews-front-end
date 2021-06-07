@@ -32,39 +32,51 @@ class Doctor {
         this.all.forEach(doc => this.renderDoctor(doc))
     }
 
-    renderDoctor(_doc) {
-        const h4 = document.createElement("h4")
-        const a = document.createElement("a")
-        a.id = `doctor-${doc.id}`
-        a.innerText = doctor.name
-        a.href = "#"
-        a.addEventListener("click", (e) => renderDoctors(e, doctor))
-        h4.appendChild(a)
-        ul().appendChild(h4)
-    }
+    // renderDoctor(_doc) {
+    //     const h4 = document.createElement("h4")
+    //     const a = document.createElement("a")
+    //     a.id = `doctor-${doc.id}`
+    //     a.innerText = doctor.name
+    //     a.href = "#"
+    //     a.addEventListener("click", (e) => renderDoctors(e, doctor))
+    //     h4.appendChild(a)
+    //     ul().appendChild(h4)
+    // }
 
-    renderDoctors(doc) {
-        const h4 = document.createElement("h4")
-        const a = document.createElement("a")
-        a.id = `category-${this.id}`
-        a.innerText = this.name
-        a.href = "#"
-        a.addEventListener("click", (e) => renderReviews(e, this))
-        h4.appendChild(a)
-        ul().appendChild(h4)
-    }
+    // renderDoctors(doc) {
+    //     const h4 = document.createElement("h4")
+    //     const a = document.createElement("a")
+    //     a.id = `category-${this.id}`
+    //     a.innerText = this.name
+    //     a.href = "#"
+    //     a.addEventListener("click", (e) => renderReviews(e, this))
+    //     h4.appendChild(a)
+    //     ul().appendChild(h4)
+    // }
 
-    renderOptionTag() {
-        const option = document.createElement("option")
-        option.value = this.id
-        option.innerText = this.name
-        return option
-        // reviewSelectDoctor().append(option)
+    // renderOptionTag() {
+    //     const option = document.createElement("option")
+    //     option.value = this.id
+    //     option.innerText = this.name
+    //     return option
+    //     // reviewSelectDoctor().append(option)
+    // }
+
+    static refreshDoctorDropdown = () => {
+        
     }
 
     static renderDoctorsInDropdown = (doctors) => {
-        const select = document.createElement("select")
-        select.id = "doctor-dropdown"
+        let select, refresh
+        if (document.querySelector("#doctor-dropdown")) {
+            refresh = true
+            select = document.querySelector("#doctor-dropdown")
+            select.innerHTML = ""
+        } else {
+            refresh = false
+            select = document.createElement("select")
+            select.id = "doctor-dropdown"
+        }
         const option = document.createElement("option")
         option.innerText = "Press To Choose An Option."
             select.add(option)
@@ -74,14 +86,16 @@ class Doctor {
             option.innerText = doctor.name
             select.add(option)
         })
-        ul().appendChild(select)
-        const br = document.createElement("br")
-        ul().appendChild(br)
-        const newDoctorButton = document.createElement("button")
-        newDoctorButton.id = "new-doctor-button" 
-        newDoctorButton.innerText = "Create a New Doctor"
-        ul().appendChild(newDoctorButton)
-        newDoctorButton.addEventListener('click', this.displayForm)
+        if (!refresh) {
+            const newDoctorButton = document.createElement("button")
+            newDoctorButton.id = "new-doctor-button" 
+            newDoctorButton.innerText = "Create a New Doctor"
+            ul().appendChild(newDoctorButton)
+            const br = document.createElement("br")
+            ul().appendChild(br)
+            ul().appendChild(select)
+            newDoctorButton.addEventListener('click', this.displayForm)
+        }
         select.addEventListener("change", this.handleDoctorDropdownChange)
    }
 

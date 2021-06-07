@@ -28,7 +28,10 @@ class DoctorApi {
             body: JSON.stringify(data)
         })
         .then(resp => resp.json())
-        .then(json => Doctor.renderDoctors(json))
+        .then(json => {
+            document.querySelector("#doctor-form").remove()
+            this.fetchDoctors()
+        })
         .catch(handleError)
          
     }
