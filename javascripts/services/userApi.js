@@ -30,6 +30,7 @@ class UserApi {
             .then(resp => resp.json())
             .then(json => {
                 let user = User.findOrCreateBy(json.data.attributes)
+                localStorage.setItem("user_id", user.id)
                 document.querySelector("#user-form").remove()
                 user.renderUser();
                 DoctorApi.fetchDoctors()

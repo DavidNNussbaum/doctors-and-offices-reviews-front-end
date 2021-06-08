@@ -33,29 +33,19 @@ class Review {
         this.all.forEach(rev => this.renderCategory(rev))
     }
 
-    renderReview(review) {
-        const h4 = document.createElement("h4")
-        const a = document.createElement("a")
-        a.id = `review-${review.id}`
-        a.innerText = review.name
-        a.href = "#"
-        a.addEventListener("click", (e) => renderReviews(e, review))
-        h4.appendChild(a)
-        ul().appendChild(h4)
-    }
 
     renderReviews(rev) {
         return rev
     }
 
-    displayForm = () => {
+    static displayForm = (e) => {
+        e.preventDefault()
         if (!reviewsForm()) {
-            DoctorApi.fetchDoctorsForSelect()
+            // DoctorApi.fetchDoctorsForSelect()
             list.insertAdjacentHTML('afterend', `
-            <form id="reviews-form">
-                <strong class="users-name">Reviews By ${current_user.first_name}</strong
-                <strong class="doctors-name">${DoctorApi.docObj.attributes.name}</strong>
+            <form id="new-reviews-form">
                 <h3>Add New Reviews:</h3>
+                <input type="hidden" id="reviews-doctorId" name="doctorId" value="${e.target.dataset.docId}"/>
                 <label for="reviews-doctorRating">Doctor Rating (1-10):</label>
                 <input type="number" name="doctorRating" id="reviews-doctorRating"><br><br>
                 <label for="reviews-doctorComments">Comments Regarding This Doctor:</label>
@@ -64,14 +54,11 @@ class Review {
                 <input type="number" name="doctorOfficeRating" id="reviews-doctorOfficeRating"><br><br>
                 <label for="reviews-doctorOfficeComments">Comments Regarding This Doctor's Office:</label>
                 <input type="text" name="doctorOfficeComments" id="reviews-doctorOfficeComments"><br><br>
-                <select id="comment_id">
-                </select>
                 <input type="submit" value="Create">
             </form>
             `)
-            // Doctor.dropDownOptions.forEach(optionTag => reviewSelectDoctor().append(optionTag))
-            document.getElementById("reviews-form").addEventListener("submit", ReviewApi.handleSubmit)
-            // reviewsForm().addEventListener("submit", handleSubmit)
+    
+            document.getElementById("new-reviews-form").addEventListener("submit", ReviewApi.handleSubmit)
         } else {
             reviewsForm().remove()
         }
@@ -89,31 +76,36 @@ class Review {
         // }
     
     }
-    renderReview = (docId) => {
+    renderReview = () => {
   
         if (document.querySelector(`#review-li-${this.id}`)){
             return
         }
-        const div = document.getElementById(`doctor-${docId}`)
+        const div = document.getElementById(`doctor-${this.doctor_id}`)
         const li = document.createElement("li")
         li.id = `review-li-${this.id}`
-        div.dataset.docId = docId
+        div.dataset.docId = this.doctor_id
         div.dataset.id = this.id
     
         li.innerHTML = `
-            Doctor Rating (1-10): <strong class="reviews-doctorRating">${this.doctor_rating}</strong><br>
+            <br>Doctor Rating (1-10): <strong class="reviews-doctorRating">${this.doctor_rating}</strong><br>
             Doctor Comments: <span class="reviews-doctorComments">${this.doctor_comments}</span><br>
             Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${this.doctor_office_rating}</span><br>
             Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${this.doctor_office_comments}</span><br>
-            <button class="edit-review" data-id="${this.id}">Edit</button>
-            <button class="delete-review" data-id="${this.id}">Delete</button><br>
         `
-    
+        if(localStorage.getItem("user_id") == this.user_id) {
+            li.innerHTML += `<button class="edit-review" data-id="${this.id}">Edit</button>
+            <button class="delete-review" data-id="${this.id}">Delete</button><br>`
+        }
+    li.innerHTML += '<hr>'
         div.appendChild(li)
+        if(localStorage.getItem("user_id") == this.user_id) {
+            document.querySelector(`button.delete-review[data-id='${this.id}']`).addEventListener("click", ReviewApi.handleDelete)
+           document.querySelector(`button.edit-review[data-id='${this.id}']`).addEventListener("click", this.handleUpdate)
+        }
         // if (User.logged_in) {
              
-           document.querySelector(`button.delete-review[data-id='${this.id}']`).addEventListener("click", ReviewApi.handleDelete)
-           document.querySelector(`button.edit-review[data-id='${this.id}']`).addEventListener("click", this.handleUpdate)
+           
         // }
     
     }

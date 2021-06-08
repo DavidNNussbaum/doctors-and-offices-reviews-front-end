@@ -87,14 +87,17 @@ class Doctor {
             select.add(option)
         })
         if (!refresh) {
-            const newDoctorButton = document.createElement("button")
-            newDoctorButton.id = "new-doctor-button" 
-            newDoctorButton.innerText = "Create a New Doctor"
-            ul().appendChild(newDoctorButton)
-            const br = document.createElement("br")
-            ul().appendChild(br)
-            ul().appendChild(select)
-            newDoctorButton.addEventListener('click', this.displayForm)
+            
+        
+                const newDoctorButton = document.createElement("button")
+                newDoctorButton.id = "new-doctor-button" 
+                newDoctorButton.innerText = "Create a New Doctor"
+                ul().appendChild(newDoctorButton)
+                const br = document.createElement("br")
+                ul().appendChild(br)
+                ul().appendChild(select)
+                newDoctorButton.addEventListener('click', this.displayForm)
+            
         }
         select.addEventListener("change", this.handleDoctorDropdownChange)
    }
@@ -109,11 +112,20 @@ class Doctor {
     if (document.querySelector(".doctor-container")) {
     document.querySelector(".doctor-container").remove()
 }
+    const docId = e.target.value
     const div = document.createElement("div")
     div.classList.add("doctor-container")
-    div.id = `doctor-${e.target.value}`
+    div.id = `doctor-${docId}`
     ul().appendChild(div)
-       ReviewApi.fetchReviews(e.target.value)
+    if (localStorage.getItem("user_id") != null) {
+        const newReviewButton = document.createElement("button")
+        newReviewButton.innerText = "Add A Review"
+        newReviewButton.dataset.docId = docId
+        newReviewButton.id = 'new-review-button'
+        div.appendChild(newReviewButton)
+        newReviewButton.addEventListener("click", Review.displayForm)
+    }
+    ReviewApi.fetchReviews(docId)
    }
 
    static displayForm = () => {

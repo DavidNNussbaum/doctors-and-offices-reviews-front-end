@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+    localStorage.removeItem("user_id")
     buttonSignLog().addEventListener("click", User.addUserForm)
-    buttonShowDoctors().addEventListener("click", DoctorApi.handleClick )
+    buttonShowDoctors().addEventListener("click", DoctorApi.fetchDoctors)
     // buttonShowReviews().addEventListener("click", displayForm)
 })
 
