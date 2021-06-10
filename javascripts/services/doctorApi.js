@@ -1,5 +1,6 @@
 class DoctorApi {
-    static fetchDoctors() {
+    static fetchDoctors(e) {
+        e.preventDefault()
         fetch('http://localhost:3000/doctors')
         .then(resp => resp.json())
         .then(json => json.data.map(docObj => {

@@ -29,17 +29,6 @@ class User {
         this.all.forEach(use => this.renderCategory(use))
     }
 
-    // renderUser(user) {
-    //     const h4 = document.createElement("h4")
-    //     const a = document.createElement("a")
-    //     a.id = `user-${user.id}`
-    //     a.innerText = user.email
-    //     a.href = "#"
-    //     a.addEventListener("click", (e) => renderUser(e, user))
-    //     h4.appendChild(a)
-    //     ul().appendChild(h4)
-    // }
-
     renderUser = () => {
         ul().innerHTML += `<h1 id='user-header'>${this.first_name}'s Doctors and Reviews</h1>`
     }
@@ -82,8 +71,15 @@ class User {
         }
     }
     
-
     logged_in() {
       return true
+    }
+
+    static logOut() {
+        localStorage.removeItem("user_id")
+        // if (document.querySelector("#user-header")) {
+        // document.querySelector("#user-header").remove()
+        // }
+        document.querySelector("#main-menu").click()
     }
 }

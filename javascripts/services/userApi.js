@@ -16,7 +16,11 @@ class UserApi {
                     password: e.target.parentElement.querySelector("#user-password").value,
                     password_confirmation: e.target.parentElement.querySelector("#user-confirmPassword").value
                 }
-            } 
+            }
+            if(e.target.parentElement.querySelector("#user-password").value !== e.target.parentElement.querySelector("#user-confirmPassword").value) {
+                alert("Your confirmed password does not match your password.")
+                return false
+            }
             
             fetch('http://localhost:3000/users', {
                 method: 'POST',
@@ -29,11 +33,16 @@ class UserApi {
             })
             .then(resp => resp.json())
             .then(json => {
-                let user = User.findOrCreateBy(json.data.attributes)
-                localStorage.setItem("user_id", user.id)
-                document.querySelector("#user-form").remove()
-                user.renderUser();
-                DoctorApi.fetchDoctors()
+                if (json.error) {
+                  alert(json.error)
+                } else {
+                    let user = User.findOrCreateBy(json.data.attributes)
+                    localStorage.setItem("user_id", user.id)
+                    document.querySelector("#user-form").remove()
+                    user.renderUser();
+                    DoctorApi.fetchDoctors()
+                }
+                
             })
             .catch(handleError)
         } else {

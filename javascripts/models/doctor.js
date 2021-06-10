@@ -83,12 +83,11 @@ class Doctor {
         doctors.forEach(doctor => {
             const option = document.createElement("option")
             option.value = doctor.id
-            option.innerText = doctor.name
+            option.innerText = `${doctor.name} - ${doctor.address}`
             select.add(option)
         })
         if (!refresh) {
-            
-        
+            // if (!!localStorage.getItem('user_id') ) {
                 const newDoctorButton = document.createElement("button")
                 newDoctorButton.id = "new-doctor-button" 
                 newDoctorButton.innerText = "Create a New Doctor"
@@ -97,7 +96,7 @@ class Doctor {
                 ul().appendChild(br)
                 ul().appendChild(select)
                 newDoctorButton.addEventListener('click', this.displayForm)
-            
+            // }
         }
         select.addEventListener("change", this.handleDoctorDropdownChange)
    }
