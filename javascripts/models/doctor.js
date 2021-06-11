@@ -78,7 +78,7 @@ class Doctor {
             select.id = "doctor-dropdown"
         }
         const option = document.createElement("option")
-        option.innerText = "Press To Choose An Option."
+        option.innerText = "Press To Choose A Doctor"
             select.add(option)
         doctors.forEach(doctor => {
             const option = document.createElement("option")
@@ -87,19 +87,24 @@ class Doctor {
             select.add(option)
         })
         if (!refresh) {
-            // if (!!localStorage.getItem('user_id') ) {
+            if (localStorage.getItem('user_id') !== null) {
                 const newDoctorButton = document.createElement("button")
                 newDoctorButton.id = "new-doctor-button" 
                 newDoctorButton.innerText = "Create a New Doctor"
                 ul().appendChild(newDoctorButton)
                 const br = document.createElement("br")
                 ul().appendChild(br)
-                ul().appendChild(select)
+                // ul().appendChild(select)
                 newDoctorButton.addEventListener('click', this.displayForm)
             // }
         }
-        select.addEventListener("change", this.handleDoctorDropdownChange)
+        // select.addEventListener("change", this.handleDoctorDropdownChange)
    }
+         ul().appendChild(select)
+        //  select.addEventListener("change", this.displayForm)
+         select.addEventListener("change", this.handleDoctorDropdownChange)
+
+}
 
    renderDoctors = (doctors) => {
     ul().innerHTML += "<h1 id='doctors-header'>Doctors</h1>"
