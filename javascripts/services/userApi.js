@@ -19,6 +19,8 @@ class UserApi {
             }
             if(e.target.parentElement.querySelector("#user-password").value !== e.target.parentElement.querySelector("#user-confirmPassword").value) {
                 alert("Your confirmed password does not match your password.")
+
+                
                 return false
             }
             

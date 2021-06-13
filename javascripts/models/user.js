@@ -33,22 +33,9 @@ class User {
         ul().innerHTML += `<h1 id='user-header'>${this.first_name}'s Doctors and Reviews</h1>`
     }
 
+
+
     
-
-    displayUser = () => {
-        // if (!userForm()) {
-        //     UserApi.fetchUserForSelect()
-        //     list.insertAdjacentHTML('afterend', `
-        //     <form id="user-form">
-        //         <strong class="user-name">${UserApi.useObj.attributes.name}</strong>
-        //     </form>
-        //     `)
-        //     document.getElementById("doctors-form").addEventListener("submit", DoctorApi.handleSubmit)
-        // } else {
-        //     usersForm().remove()
-        // }
-    }
-
     static addUserForm = () => {
         if (!userForm()) {
             UserApi.fetchUser()
@@ -70,6 +57,9 @@ class User {
             userForm().remove()
         }
     }
+
+
+    
     
     logged_in() {
       return true
@@ -77,9 +67,6 @@ class User {
 
     static logOut() {
         localStorage.removeItem("user_id")
-        // if (document.querySelector("#user-header")) {
-        // document.querySelector("#user-header").remove()
-        // }
         document.querySelector("#main-menu").click()
     }
 }
