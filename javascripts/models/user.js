@@ -55,13 +55,13 @@ class User {
             list.insertAdjacentHTML('afterend', `
             <form id="user-form">
                 <label for="user-firstName">Your First Name:</label>
-                <input type="string" name="userFirstName" id="user-firstName"><br><br>
+                <input type="text" name="userFirstName" id="user-firstName"><br><br>
                 <label for="user-email">Your email:</label>
-                <input type="string" name="userEmail" id="user-email"><br><br>
+                <input type="text" name="userEmail" id="user-email"><br><br>
                 <label for="user-password">Your Password:</label>
-                <input type="string" name="userPassword" id="user-password"><br><br>
+                <input type="password" name="userPassword" id="user-password"><br><br>
                 <label for="user-confirmPassword">Confirm Your Password:</label>
-                <input type="string" name="userConfirmPassword" id="user-confirmPassword"><br><br>
+                <input type="password" name="userConfirmPassword" id="user-confirmPassword"><br><br>
                 <input type="submit" value="Submit">
             </form>
             `)

@@ -153,10 +153,10 @@ class Review {
          
         li.innerHTML = `
             
-        Doctor Rating (1-10): <strong class="reviews-doctorRating">${this.doctor_rating}</strong>
-        Doctor Comments: <span class="reviews-doctorComments">${this.doctor_comments}</span>
-        Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${this.doctor_office_rating}</span>
-        Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${this.doctor_office_comments}</span>
+        Doctor Rating (1-10): <strong class="reviews-doctorRating">${this.doctor_rating}</strong><br>
+        Doctor Comments: <span class="reviews-doctorComments">${this.doctor_comments}</span><br>
+        Doctor's Office Rating (1-10): <span class="reviews-doctorOfficeRating">${this.doctor_office_rating}</span><br>
+        Doctor's Office Comments (1-10): <span class="reviews-doctorOfficeComments">${this.doctor_office_comments}</span><br>
             <button class="edit-review" data-id="${this.id}">Edit</button>
             <button class="delete-review" data-id="${this.id}">Delete</button>
         `

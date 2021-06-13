@@ -6,6 +6,15 @@ class ReviewApi {
             let review = Review.findOrCreateBy(revObj.attributes)
             review.renderReview(doctor_id)
         }))
+        .then(_ => {
+          const container = document.getElementById(`doctor-${doctor_id}`)
+          const count = container.childElementCount
+          if (count === 0) {
+               const paragraph = document.createElement("p")
+               paragraph.innerText = "There are currently no reviews for this doctor."
+               container.appendChild(paragraph)
+          }
+        })
         .catch(handleError)
     }
 
