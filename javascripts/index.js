@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     User.logOut()
     // buttonSignLog().addEventListener("click", User.addUserForm)
     logOn().addEventListener("click", User.addUserForm)
-    signIn().addEventListener("click", User.addUserForm)
+    signUp().addEventListener("click", User.addUserForm)
     viewOnly().addEventListener("click", DoctorApi.fetchDoctors)
     // buttonShowDoctors().addEventListener("click", DoctorApi.fetchDoctors)
     logOut().addEventListener("click", User.logOut)
@@ -14,6 +14,12 @@ const returnToMain = (e) => {
     ul().innerHTML = ""
     if (userForm()) {
       userForm().remove()
+    }
+    if (doctorForm()) {
+        doctorForm().remove()
+    }
+    if (newReviewsForm()) {
+        newReviewsForm().remove()
     }
 }
 

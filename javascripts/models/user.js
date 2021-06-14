@@ -58,13 +58,6 @@ class User {
         }
     }
 
-
-    
-    
-    logged_in() {
-      return true
-    }
-
     static logOut() {
         localStorage.removeItem("user_id")
         document.querySelector("#main-menu").click()

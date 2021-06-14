@@ -40,7 +40,7 @@ class Review {
 
     static displayForm = (e) => {
         e.preventDefault()
-        if (!reviewsForm()) {
+        if (!newReviewsForm()) {
             // DoctorApi.fetchDoctorsForSelect()
             list.insertAdjacentHTML('afterend', `
             <form id="new-reviews-form">
@@ -60,7 +60,7 @@ class Review {
     
             document.getElementById("new-reviews-form").addEventListener("submit", ReviewApi.handleSubmit)
         } else {
-            reviewsForm().remove()
+            newReviewsForm().remove()
         }
     }
 
