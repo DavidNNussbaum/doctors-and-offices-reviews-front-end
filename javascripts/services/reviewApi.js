@@ -85,8 +85,12 @@ class ReviewApi {
         .then(resp => resp.json())
         .then(json => {
            const review = Review.findOrCreateBy(json)
+        review.doctor_rating = json.doctor_rating
+        review.doctor_comments = json.doctor_comments
+        review.doctor_office_rating = json.doctor_office_rating
+        review.doctor_office_comments = json.doctor_office_comments
             review.replaceElement(e.target.parentElement)})
-        // .catch(err => alert(err))
+        .catch(err => alert(err))
     }
     
     static handleError(error) {

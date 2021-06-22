@@ -9,7 +9,7 @@ class UserApi {
     static handleSubmit = (e) => {
         e.preventDefault()
         if (ul().children.length < 1) {
-            const payload = {
+            const data = {
                 user: {
                     first_name: e.target.parentElement.querySelector("#user-firstName").value,
                     email: e.target.parentElement.querySelector("#user-email").value,
@@ -30,7 +30,7 @@ class UserApi {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(data)
                 
             })
             .then(resp => resp.json())

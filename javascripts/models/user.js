@@ -24,11 +24,6 @@ class User {
         return this.findById(userObj.id) || new User(userObj)
     }
 
-    render() {
-        ul().innerHTML += "<h1 id='users-header'>Users</h1>"
-        this.all.forEach(use => this.renderCategory(use))
-    }
-
     renderUser = () => {
         ul().innerHTML += `<h1 id='user-header'>${this.first_name}'s Doctors and Reviews</h1>`
     }

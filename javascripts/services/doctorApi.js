@@ -34,7 +34,11 @@ class DoctorApi {
         .then(resp => resp.json())
         .then(json => {
             document.querySelector("#doctor-form").remove()
-            this.fetchDoctors()
+            this.fetchDoctors();
+            const doctorContainer = document.querySelector('.doctor-container')
+            doctorContainer.querySelectorAll('li').forEach(element => {
+                element.remove()
+            })
         })
         .catch(handleError)
          
